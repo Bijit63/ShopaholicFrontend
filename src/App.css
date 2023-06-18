@@ -456,7 +456,15 @@ background-color: #e9f3fc;
 
 
 
-
+@media screen and (min-width: 720px) {
+  #otpless-floating-button {
+  
+    position: fixed;
+    left: 65%;
+    top: 120%;
+    transform: translate(-50%, 185%);
+  }
+}
 
 
 

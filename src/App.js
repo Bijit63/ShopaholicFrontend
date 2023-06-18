@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import Signin from './Components/Signin';
 import {
-  HashRouter,
+  BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
@@ -51,7 +51,7 @@ function App() {
   return (
 
     <Notecontext>
-    <HashRouter>
+    <BrowserRouter>
 
 
       
@@ -80,7 +80,7 @@ function App() {
       <Footer/>
 
 
-      </HashRouter>
+      </BrowserRouter>
       </Notecontext>
   );
 }

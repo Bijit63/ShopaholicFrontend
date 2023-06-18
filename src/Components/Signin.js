@@ -1,13 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {  Input } from 'antd';
 import { Link } from 'react-router-dom';
-
+import { ImFacebook2 } from 'react-icons/im';
 
 
 
 const Signin = (props) => {
+
+
+//   useEffect(() => {
+
+//     const s= document.getElementById("thecrater-otpless");
+//     if(!s)
+//     {
+//      const script = document.createElement("script");
+//      script.src = "https://otpless.com/auth.js";
+//      script.id="shopaholic-otpless"
+//      document.head.appendChild(script);
+//     }
+//      window.otpless = (otplessUser) => {
+//       alert(JSON.stringify(otplessUser));
+//      };
+
+     
+  
+//  }, [])
+
+
+
 
 
   const navigate=useNavigate()
@@ -51,7 +73,15 @@ const Signin = (props) => {
    navigate('/');
       props.alert('success',`signin successfull as a ${json.type}`)
   }
+
+
+
   }
+
+
+
+
+
   const [user, setuser] = useState({email:"",password:""})
 
   const onchange=(e)=>
@@ -66,21 +96,107 @@ const Signin = (props) => {
   //---------------------------------------------------------------------------------
   // changing signin for buyer and seller
   
-const [border, setborder] = useState({borderbuy:"text-black",bordersell:"text-white bg-black"})
+const [border, setborder] = useState({borderbuy:"text-white bg-black",bordersell:"text-black "})
 const [type, settype] = useState("buyer")
   const buyer=()=>{
     
-    setborder({borderbuy:" text-black",bordersell:"text-white bg-black"})
+    setborder({bordersell:"text-black",borderbuy:"text-white bg-black"})
     settype("buyer")
   }
   const seller=()=>{
     
-    setborder({bordersell:"text-black",borderbuy:"text-white bg-black"})
+    setborder({borderbuy:" text-black",bordersell:"text-white bg-black"})
     settype("seller")
    
     
   }
 
+
+
+
+
+
+
+
+  const [showScript, setShowScript] = useState(false);
+
+useEffect(() => {
+  
+  if(showScript)
+  {
+    const s= document.getElementById("thecrater-otpless");
+  if(!s)
+  {
+   const script = document.createElement("script");
+   script.src = "https://otpless.com/auth.js";
+   script.id="thecrater-otpless"
+   document.head.appendChild(script);
+  }
+  
+  
+  }
+}, [showScript])
+ 
+
+
+useEffect(() => {
+  
+  
+  
+    window.otpless = async (otplessUser) => {
+    //  console.log(otplessUser.email.email );
+  
+     const usermail = {
+      email: otplessUser.email.email 
+    };
+  
+     const response = await fetch(type==="buyer"?"https://shopbackend-izge.onrender.com/buyerotpless":"https://shopbackend-izge.onrender.com/sellerotpless", {
+    method: "POST", 
+    mode: "cors", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(usermail), 
+  });
+  
+  const json= await response.json(); 
+  console.log(json)
+
+  if(json.error)
+  {
+    props.alert('danger',`${json.error}`)
+  }
+
+  if(json.seller)
+  {
+    
+    localStorage.setItem("authtoken",json.authtoken)
+    localStorage.setItem("type",json.type)
+    
+    props.alert('success',`signin successfull as a ${json.type}`)
+    window.location.pathname = '/yourproducts'
+
+  
+  }
+  if(json.buyer)
+  {
+    
+    localStorage.setItem("authtoken",json.authtoken)
+    localStorage.setItem("type",json.type)
+    props.alert('success',`signin successfull as a ${json.type}`)
+    window.location.pathname = '/'
+  }
+  
+  
+  
+    
+    };
+
+  
+  
+
+  
+}, [type]);
 
 
   return (
@@ -153,6 +269,12 @@ const [type, settype] = useState("buyer")
               <p className='form-text text-center '>Don't have an account ? 
               <span> <Link to="/signup" className='text-decoration-none link'>Sign Up</Link> </span> 
               </p>
+
+
+
+              <div className='d-grid'>
+                <button type="submit" onClick={()=>{setShowScript(!showScript);}} className="btn btn-success mb-4 ">Login With Otpless</button>
+                </div>
               
 
             </div>
