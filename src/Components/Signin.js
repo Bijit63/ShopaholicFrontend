@@ -162,11 +162,12 @@ useEffect(() => {
   const json= await response.json(); 
   console.log(json)
 
+  // window.location.reload();
   if(json.error)
   {
     props.alert('danger',`${json.error}`)
   }
-
+  
   if(json.seller)
   {
     
@@ -174,9 +175,11 @@ useEffect(() => {
     localStorage.setItem("type",json.type)
     
     props.alert('success',`signin successfull as a ${json.type}`)
-    window.location.pathname = '/yourproducts'
-
-  
+    localStorage.setItem('signin',true) 
+    
+    
+    window.location.hash = '#/yourproducts'
+    // window.location.pathname = '/yourproducts'
   }
   if(json.buyer)
   {
@@ -184,13 +187,16 @@ useEffect(() => {
     localStorage.setItem("authtoken",json.authtoken)
     localStorage.setItem("type",json.type)
     props.alert('success',`signin successfull as a ${json.type}`)
-    window.location.pathname = '/'
+    localStorage.setItem('signin',true) 
+    window.location.hash = '#/';
+    // window.location.pathname = '/';
   }
   
   
   
     
     };
+
 
   
   

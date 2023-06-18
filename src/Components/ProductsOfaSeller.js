@@ -12,6 +12,11 @@ const ProductsOfaSeller = (props) => {
 
 
     useEffect(() => {
+      if(localStorage.getItem('signin')==="true")
+      {
+        window.location.reload();
+        localStorage.setItem('signin',"false");
+      }
       fetchsellerproducts("https://shopbackend-izge.onrender.com/fetchallproduct")
       // eslint-disable-next-line
     }, [products])

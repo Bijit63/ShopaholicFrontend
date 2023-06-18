@@ -15,6 +15,12 @@ const Home = (props) => {
     const {fetchallproducts,allproducts,loading}=context
     useEffect(() => {
         
+      if(localStorage.getItem('signin')==="true")
+      {
+        window.location.reload();
+        localStorage.setItem('signin',"false");
+      }
+
         fetchallproducts("https://shopbackend-izge.onrender.com/api/allproducts")
         console.log(allproducts)
         // eslint-disable-next-line

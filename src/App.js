@@ -4,6 +4,7 @@ import Navbar from './Components/Navbar';
 import Signin from './Components/Signin';
 import {
   BrowserRouter,
+  HashRouter,
   Routes,
   Route,
 } from "react-router-dom";
@@ -51,7 +52,7 @@ function App() {
   return (
 
     <Notecontext>
-    <BrowserRouter>
+    <HashRouter>
 
 
       
@@ -80,7 +81,7 @@ function App() {
       <Footer/>
 
 
-      </BrowserRouter>
+      </HashRouter>
       </Notecontext>
   );
 }
