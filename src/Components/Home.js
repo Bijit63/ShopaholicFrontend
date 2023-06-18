@@ -14,6 +14,11 @@ const Home = (props) => {
     const context= useContext(Context)
     const {fetchallproducts,allproducts,loading}=context
     useEffect(() => {
+
+      if(localStorage.getItem('type')==="seller")
+      {
+        window.location.hash="#/yourproducts";
+      }
         
       if(localStorage.getItem('signin')==="true")
       {
